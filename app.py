@@ -1,6 +1,5 @@
 import gradio as gr
 from pytube import YouTube
-from moviepy.editor import *
 from pydub import AudioSegment
 import os
 
@@ -8,8 +7,7 @@ def convert_youtube_to_mp3(url):
     yt = YouTube(url)
     video = yt.streams.filter(only_audio=True).first()
     out_file = video.download(output_path=".")
-    base, ext = os.path.splitext(out_file)
-    new_file = base + '.mp3'
+    new_file = os.path.splitext(out_file)[0] + ".mp3"
     AudioSegment.from_file(out_file).export(new_file, format="mp3")
     os.remove(out_file)
     return new_file
@@ -38,5 +36,5 @@ with gr.Blocks() as demo:
             yt_output = gr.File(label="Download do MP3")
         yt_btn.click(convert_youtube_to_mp3, inputs=yt_url, outputs=yt_output)
 
-# Lançar o servidor na porta que o Render exige
+import os
 demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
