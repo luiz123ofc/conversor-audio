@@ -3,7 +3,6 @@ from pytube import YouTube
 from moviepy.editor import *
 from pydub import AudioSegment
 import os
-app.run(host="0.0.0.0", port=10000)
 
 def convert_youtube_to_mp3(url):
     yt = YouTube(url)
@@ -21,8 +20,10 @@ def convert_audio(uploaded_file, output_format):
     audio.export(output_filename, format=output_format)
     return output_filename
 
+# A parte do código abaixo já vai rodar o servidor automaticamente
 with gr.Blocks() as demo:
     gr.Markdown("# Conversor de Áudio e YouTube para MP3")
+    
     with gr.Tab("Converter Áudio"):
         with gr.Row():
             audio_input = gr.File(label="Selecione um arquivo de áudio")
@@ -38,4 +39,5 @@ with gr.Blocks() as demo:
             yt_output = gr.File(label="Download do MP3")
         yt_btn.click(convert_youtube_to_mp3, inputs=yt_url, outputs=yt_output)
 
+# O Gradio automaticamente inicia o servidor com o comando abaixo
 demo.launch()
