@@ -3,6 +3,7 @@ from pytube import YouTube
 from moviepy.editor import *
 from pydub import AudioSegment
 import os
+app.run(host="0.0.0.0", port=10000)
 
 def convert_youtube_to_mp3(url):
     yt = YouTube(url)
