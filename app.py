@@ -20,7 +20,6 @@ def convert_audio(uploaded_file, output_format):
     audio.export(output_filename, format=output_format)
     return output_filename
 
-# A parte do código abaixo já vai rodar o servidor automaticamente
 with gr.Blocks() as demo:
     gr.Markdown("# Conversor de Áudio e YouTube para MP3")
     
@@ -39,5 +38,5 @@ with gr.Blocks() as demo:
             yt_output = gr.File(label="Download do MP3")
         yt_btn.click(convert_youtube_to_mp3, inputs=yt_url, outputs=yt_output)
 
-# O Gradio automaticamente inicia o servidor com o comando abaixo
-demo.launch()
+# Lançar o servidor na porta que o Render exige
+demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
